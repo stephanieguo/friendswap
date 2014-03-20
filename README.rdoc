@@ -1,3 +1,113 @@
 == README
 
 FriendSwap
+
+Friendswap Readme
+
+
+
+How to Run Our Code
+
+Install Ruby v1.9.3+ and Rails v4.0.2.
+Install ImageMagick (for image cropping functionality).
+In your terminal, navigate to the friendswap folder
+Run bundle install to ensure that all required gems are installed
+Run rails server. (You may need to run bin/rake db:migrate RAILS_ENV=development and then run rails server again.)
+In your browser, go to localhost:3000/listings/index
+
+
+
+Project Overview
+
+Application Structure
+
+The underlying structure of Friendswap consists of different listings, created by a group of users. Users log in using their Facebook credentials, and then proceed to browse for listings or create/edit listings of their own. Users can also write reviews for other listings and message each other through the app.
+
+We set up our SQLite database with a table of all the listings, with important attributes such as the name, the dates, the city, category and a photo etc. We then had a table of users and their relevant information, as well as a table of emails and reviews. Users had many listings that they created, and emails and reviews that they wrote. 
+
+Controllers
+
+We have four controllers for the structure of our Rails app.
+The Sessions and Application controllers were used to manage the current logged in user with OAuth.
+The Listings controller handled all the views that dealt with listings-related pages.
+The User controller handled the views that dealt with user-specific views, such as profiles or personal dashboards. 
+
+Facebook Integration
+
+For the Facebook integration, we used the Facebook API and set up an app through their Facebook Developers portal. We then used the GEM OAuth to integrate our user table with Facebook API. Users can sign up using Facebook, thus creating their accounts in our database, and then proceed to login afterward with Facebook. 
+
+Views
+
+Our numerous views are divided among listings views and user views.
+Under the listings controller, the views include the home page; a form for filtering by category and date; pages for displaying listings filtered by category, city, date, user, etc.; the listing page itself; forms for creating/editing listings; and forms for writing reviews/submitting requests for a new city.
+Under the user controller, the views include the user’s personal dashboard page, profile and listings display pages, forms for editing the profile, and the in-app inbox for send and receiving messages to and from other users.
+
+Features and Plugins
+
+We used a number of plugins in building our features.
+
+General Frontend - we used Bootstrap and jQuery.
+Date Display - we used Bootstrap Datepicker for a user-friendly calendar widget for choosing and displaying available dates for a listing or listing search.
+Image Cropping - we used Jcrop for jQuery (frontend) and MiniMagick with ImageMagick (backend) to give users the ability to crop their profile and listings photos.
+Location Display - we used Google Maps API and their sample JS implementation to display addresses using Google Maps on the listing page.
+Review Ratings - we used RateIt for jQuery to display ratings in a user-friendly format.
+
+
+
+Explanation of Code Base
+
+We started from a general Ruby on Rails starter application framework. .
+Below, we highlight the major files & folders of our development.
+
+App
+
+Assets
+
+Images - user-uploaded images and cropped versions of images
+Javascripts - all js/coffee files: Bootstrap, Bootstrap Datepicker, Facebook, jQuery, Jcrop for jQuery, RateIt for jQuery, and our own scripts for basic-level validation of user form submissions (formvalidation.js)
+Stylesheets - all css/scss files: Bootstrap, Jcrop, RateIt (with images), and our own frontend styling (friendswap.css)
+
+Controllers
+
+Application - finds the current user from the User table if the session ID is correct; written by us
+Listings - handles actions related to creating, editing, and deleting listings; displaying listings by category, city, user, and category/date filter; cropping listing photos, and posting listing reviews; written by us
+Sessions - creates a new session when user logs in and sets the session ID; written by us
+User - handles actions related to editing user profiles and cropping profile photos, posting and displaying inbox messages; written by us
+
+Models
+
+Email, Listing, Review - All belong to the User model. 
+User - Has many listings, emails, and reviews. Some user fields such as name and email are initially populated from the user’s Facebook profile. 
+
+Views (all written by us)
+	Layouts\application.html.erb - overall site layout and navigation
+
+	Listings
+		index - application home page
+		category, city, user - display listings by appropriate classification
+		explore, explore_listings - filter listings by category and date, display filtered listings
+		listing - display the listing information: name/description/photo, location/map, reviews/average rating, dates available, and user
+		create, edit, crop - create a new listing, edit a listing, and crop the image for the listing
+		review, req - submit a review of the listing, submit a request for a new city
+	
+	Sessions - Every time a user logs in, we keep track of the current logged-in user in the session data
+
+	Users
+		dashboard, _dashboard - basic user dashboard navigation
+		profile, listings - display the user’s profile, display the user’s listings with option to edit/delete
+		edit, crop - edit the user’s profile, crop the user’s newly added profile image
+		inbox, thread, email - display messages in the user’s inbox, display messages in the user’s conversation thread, send a message to another user
+
+Config
+
+Initializers
+
+omniauth - provides OAuth our Facebook app credentials
+secret_token.rb - contains app token for our Facebook app
+application.yml - contains the app credentials for our Facebook app
+routes.rb - application routes; written by us
+
+Db
+Migrate - stores definitions of database migrations that were written by us
+schema.rb - auto-generated file based on the state of the SQLite database, demonstrating the four models and the columns for each model
+Public\Images - application images displayed to user
