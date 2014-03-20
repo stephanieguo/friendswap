@@ -12,7 +12,7 @@
 	<br>
 		<% @mostRecent = 0 %>
 		<% @emails.reverse_each do |e| %>
-			<% if e.sender == params[:sender].to_i || e.receiver == params[:sender].to_i %>
+			<% if (e.sender == @current_user.id && e.receiver == params[:sender].to_i) || (e.receiver == @current_user.id && e.sender == params[:sender].to_i)%>
 				<% if e.id > @mostRecent %> 
 					<% @mostRecent = e.id %>
 				<% end %>
