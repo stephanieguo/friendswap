@@ -177,7 +177,9 @@ class ListingsController < ApplicationController
     require 'open-uri'
     if File.exist?(Rails.root.join('app', 'assets', 'images', @listing.photo))
       img = MiniMagick::Image.open(Rails.root.join('app', 'assets', 'images', @listing.photo))
-      img.resize('900x600')
+      if img[:width] > 900 || img[:height] > 600
+        img.resize('900x600')
+      end
       img.crop("#{w}x#{h}+#{x1}+#{y1}")
       img.write(Rails.root.join('app', 'assets', 'images', @listing.user_id.to_s + '_' + @listing.id.to_s + '.jpg'))
       img
