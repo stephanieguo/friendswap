@@ -1,4 +1,7 @@
 <h1>Search Results</h1>
+<% if @listings.nil? || @listings.empty? %>
+      <h3>There are no listings that match your criteria.</h3>
+ <% else %>
 <div class="well well-sm well-full">
 		<div class="listings">
 			
@@ -24,3 +27,4 @@
 			</table>
 		</div>
 	</div>
+<% end %>
