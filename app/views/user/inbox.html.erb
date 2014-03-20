@@ -2,6 +2,9 @@
 <div class="well well-lg">
 						<h1>Inbox</h1>
 						<br />
+						<% if @emails.length == 0 %>
+							<h4> No messages yet! </h4>
+						<% end %>
 							<% @emails.reverse_each do |e| %>
 								<div class="panel panel-info">
 									<div class="panel-heading">
