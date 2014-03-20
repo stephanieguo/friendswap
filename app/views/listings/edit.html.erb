@@ -1,6 +1,3 @@
-<% content_for (:head) do %>
-<% end %>
-
 <h1>Edit a Listing</h1>
 
 <%= form_tag("/listings/update", :method => "post", :multipart => true, :class => "form-horizontal", :role => "form", :onsubmit => "return validateListingFormEdit()", :name => "listingform") do %>
